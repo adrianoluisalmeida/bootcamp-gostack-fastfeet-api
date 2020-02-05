@@ -86,7 +86,7 @@ class DeliverymanController {
       return res.status(400).json({ error: 'Deliveryman Id does not exist' });
     }
 
-    deliveryman.delete();
+    deliveryman.destroy();
 
     return res.json(true);
   }
