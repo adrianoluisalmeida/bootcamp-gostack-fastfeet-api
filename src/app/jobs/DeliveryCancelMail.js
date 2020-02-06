@@ -2,26 +2,24 @@ import { format, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Mail from '../../lib/Mail';
 
-class DeliveryMail {
+class DeliveryCancelMail {
   get key() {
-    return 'DeliveryMail';
+    return 'DeliveryCancelMail';
   }
 
   async handle({ data }) {
     const { delivery } = data;
 
-    console.log(data);
-
     await Mail.sendMail({
       to: `${delivery.deliveryman.name} <${delivery.deliveryman.email}>`,
-      subject: 'Encomenda registrada',
-      template: 'delivery',
+      subject: 'Encomenda cancelada',
+      template: 'delivery_cancel',
       context: {
         provider: delivery.deliveryman.name,
-        user: delivery.deliveryman.name,
         product: delivery.product,
+        user: delivery.deliveryman.name,
         date: format(
-          parseISO(delivery.created_at),
+          parseISO(delivery.canceled_at),
           "'dia' dd 'de' MMMM', às' H:mm'h'  ",
           {
             locale: pt,
@@ -32,4 +30,4 @@ class DeliveryMail {
   }
 }
 
-export default new DeliveryMail();
+export default new DeliveryCancelMail();
